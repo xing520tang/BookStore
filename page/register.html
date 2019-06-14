@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta name="description" content="bookstore">
+  <meta name="author" content="tinyspot">
+  <link rel="icon" href="./favicon.ico">
+  <title>用户注册</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./bootstrapvalidator054/dist/css/bootstrapValidator.min.css">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="./assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <link href="navbar-fixed-top.css" rel="stylesheet">
+  <script src="./assets/js/ie-emulation-modes-warning.js"></script>
+  <style>
+      .nav > li:hover .dropdown-menu{display: block;}
+  </style>
+</head>
+<body>
+    <div id="main-div" class="float-container">
+        <!-- 导航栏开始 -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" style="box-shadow:0px 1px 8px 5px #ccc;">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-grain">BookStore</span></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">
+                    <li><a href="./index.html">主页</a></li>
+                    <li><a href="#about">关于</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../navbar/">成为商家</a></li>
+                    <li><a href="../navbar-static-top/">登录</a></li>
+                    <li class="active"><a href="./register.html">注册<span class="sr-only">(current)</span></a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+        <!-- 导航栏结束 -->
+        <!-- 主内容 -->
+        <div id="main-container" class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>注册</h2>
+                    <hr />
+                    <p>
+                        <span class="requiredBefore">
+                            为必填
+                        </span>
+                    </p>
+                    <form action="#" id="registerForm" method="post">
+                        <!-- 电话号码 -->
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <label class="col-md-3 control-label"></label>
+                              <div class="col-md-6">
+                                   <div class="input-group">
+                                       <span class="input-group-addon requiredAfter">手机号码</span>
+                                       <input type="text" class="form-control input-md" id="" name="phoneNumber" placeholder="请输入手机号码"
+                                       data-bv-different="true" data-bv-different-field="password" data-bv-different-message="手机号不能与密码相同"
+                                       data-bv-field="phoneNumber">
+                                   </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- 登录密码 -->
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <label class="col-md-3 control-label"></label>
+                              <div class="col-md-6">
+                                   <div class="input-group">
+                                       <span class="input-group-addon requiredAfter">登录密码</span>
+                                       <input type="password" class="form-control input-md" id="" name="password" placeholder="请输入登录密码"
+                                       data-bv-identical="true" data-bv-identical-field="passwordConfirm" data-bv-identical-message="两次输入密码不一致"
+                                       data-bv-different="true" data-bv-different-field="phoneNumber" data-bv-different-message="密码不能和手机号相同"
+                                       data-bv-field="password">
+                                   </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- 密码确认 -->
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <label class="col-md-3 control-label"></label>
+                              <div class="col-md-6">
+                                   <div class="input-group">
+                                       <span class="input-group-addon requiredAfter">确认密码</span>
+                                       <input type="password" class="form-control input-md" id="" name="passwordConfirm" placeholder="请再次输入密码"
+                                       data-bv-identical="true" data-bv-identical-field="password" data-bv-identical-message="两次输入密码不一致"
+                                       data-bv-different="true" data-bv-different-field="phoneNumber" data-bv-different-message="密码不能和手机号一样"
+                                       data-bv-field="passwordConfirm">
+                                   </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="" class="col-md-3 control-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                      <span class="input-group-addon requiredAfter"  id="genderr">性 别</span>
+                                      <!-- <input type="text" class="form-control" placeholder=""> -->
+                                      <div class="btn-group" data-toggle="buttons" style="margin-left:27px;">
+                                          <label for="" class="btn btn-default">
+                                              <input type="radio" name="gender" id="opt1" autocomplete="off">男生
+                                          </label>
+                                          <label for="" class="btn btn-default">
+                                              <input type="radio" name="gender" id="opt2" autocomplete="off" >女生
+                                          </label>
+                                          <label for="" class="btn btn-default">
+                                              <input type="radio" name="gender" id="opt3" autocomplete="off" >其他
+                                          </label>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- 主内容结束 -->
+    </div>
+
+    <hr />
+
+    <!-- 脚注 -->
+    <div class="container">
+        <footer class="footer">
+            <ul>
+                <li><a href='./tos'>服务条款</a></li> <span class="sep">|</span>
+                <li><a href='/privacy'>隐私政策</a></li><span class="sep">|</span>
+                <li><a href='/company'>Author：TinySpot</a></li><span class="sep">|</span>
+                <li><a href='/faq'>FAQ</a></li><span class="sep">|</span>
+                <li><a href='/contact'>联系我们</a></li>
+            </ul>
+        <div class="text-center">
+            <small id="copyright">Copyright Since 2019 &copy;<a href="http://127.0.0.1:8080">TinySpot Inc.</a> All rights reserved.</small>
+        </div>
+        </footer>
+    </div>
+
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="./bootstrapvalidator054/dist/js/bootstrapValidator.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(registerForm).bootstrapValidator({
+                    message: 'This value is not valid!',
+                    feedbackIcons:{
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields:{
+                        phoneNumber:{
+                            message: '手机号无效',
+                            validators:{
+                                notEmpty:{
+                                    message: '手机号不能为空'
+                                },
+                                stringLength:{
+                                    min: 11,
+                                    max: 11,
+                                    message: '手机号码格式不正确（11位）'
+                                },
+                            }
+                        },
+                        password:{
+                            validators:{
+                                notEmpty:{
+                                    message:'密码不能为空'
+                                },
+                                stringLength:{
+                                    min: 6,
+                                    max: 16,
+                                    message: '密码长度在6~16个字符'
+                                }
+                            }
+                        },
+                        passwordConfirm:{
+                            validators:{
+                                notEmpty:{
+                                    message:'密码不一致'
+                                }
+                            }
+                        }
+                    },
+                })
+            });
+        </script>
+</body>
+</html>
