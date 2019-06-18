@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, inital-scale=1, maximum-scale=1,
+    minimum-scale=1, user-scalable=no">
+    <title>表单</title>
+    <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  </head>
+  <body>
+    <!-- 按钮 -->
+    <button class="btn btn-default">按钮</button>
+    <button class="btn btn-success btn-lg">按钮</button>
+    <button class="btn btn-warning">按钮</button>
+    <button class="btn btn-primary">按钮</button>
+    <button class="btn btn-danger " disabled="disabled">按钮</button>
+    <button class="btn btn-info btn-lg">
+      <span class="glyphicon glyphicon-sound-dolby"></span> 播放
+    </button>
+<!-- 进度条 -->
+  <div class="progress" style="margin-top:20px;">
+    <div class="progress-bar progress-bar-info progress-bar-striped" style="width:50%;">
+      50%
+    </div>
+  </div>
+<!-- 列表 -->
+  <ul class="list-group" style="margin-top:50px;">
+    <li class="list-group-item active">
+      这是一个列表
+      <span class="badge">10</span>
+    </li>
+    <li class="list-group-item disabled">
+      这是一个列表
+      <span class="badge">10</span>
+    </li>
+    <li class="list-group-item list-group-item-warning">
+      这是一个列表
+      <span class="badge">10</span>
+    </li>
+  </ul>
+<!-- 面板 -->
+  <div class="panel panel-info" style="margin-top:50px;">
+    <div class="panel-heading">面板的头部</div>
+    <div class="panel-body">面板的具体内容</div>
+    <div class="panel-footer">面板的脚注</div>
+  </div>
+  <!-- bootstrap种的插件 -->
+  <!-- 弹窗 -->
+  <!-- 按钮触发弹窗 -->
+  <button type="button" class="btn btn-default" data-toggle="modal"
+  data-target="#myModal"> 点击弹窗 </button>
+  <!-- modal弹窗窗口 -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dailog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span><span class="sr-only">关闭弹窗</span></button>
+          <h4 class="modal-title" id="myModalLabel">标题</h4>
+        </div>
+        <div class="model-body">慕课网</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./jquery-3.3.1/dist/jquery.min.js"></script>
+  <script src="./bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

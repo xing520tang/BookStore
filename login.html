@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta name="description" content="bookstore">
+  <meta name="author" content="tinyspot">
+  <link rel="icon" href="./favicon.ico">
+  <title>用户登录</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="./assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <link href="navbar-fixed-top.css" rel="stylesheet">
+  <script src="./assets/js/ie-emulation-modes-warning.js"></script>
+  <style>
+      .nav > li:hover .dropdown-menu{display: block;}
+  </style>
+</head>
+<body>
+    <div id="main-div" class="float-container">
+        <!-- 导航栏开始 -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" style="box-shadow:0px 1px 8px 5px #ccc;">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="./index.html"><span class="glyphicon glyphicon-grain">BookStore</span></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">
+                    <li><a href="./index.html">主页</a></li>
+                    <li><a href="https://github.com/xing520tang/BookStore" target="_blank">关于</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="#">没有更多</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li class="dropdown-header">Nav header</li>
+                          <li><a href="#">啊哈哈哈</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="./bRegister.html">成为商家</a></li>
+                    <li class="active"><a href="./login.html">登录</a></li>
+                    <li><a href="./register.html">注册<span class="sr-only">(current)</span></a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+        <!-- 导航栏结束 -->
+        <!-- 主内容 -->
+        <div id="main-container" class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>登录BookStore</h2>
+                    <hr />
+                    <br>
+                    <form action="index.html" id="loginForm" method="post">
+                        <!-- 电话号码 -->
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <label class="col-md-3 control-label"></label>
+                              <div class="col-md-6">
+                                   <div class="input-group">
+                                       <span class="input-group-addon requiredAfter">手机号码</span>
+                                       <input type="text" class="form-control input-md" id="" name="phoneNumber" placeholder="请输入手机号码">
+                                   </div>
+                              </div>
+                              <small class="col-md-offset-8 col-md-2" style="color:#aaa; margin-top:5px;">请用手机号登录</small>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- 登录密码 -->
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <label class="col-md-3 control-label"></label>
+                              <div class="col-md-6">
+                                   <div class="input-group">
+                                       <span class="input-group-addon requiredAfter">登录密码</span>
+                                       <input type="password" class="form-control input-md" id="" name="password" placeholder="请输入登录密码">
+                                   </div>
+                              </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <!-- captcha -->
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <label class="col-md-3 control-label"></label>
+                              <div class="col-md-6">
+                                   <div class="input-group">
+                                       <span class="input-group-addon requiredAfter" id="captchaOpt"></span>
+                                       <input type="text" class="form-control" name="captcha" data-bv-field="captcha">
+                                   </div>
+                              </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                              <!-- <label class="col-md-5 control-label"></label> -->
+                              <div class="col-md-2 col-md-offset-5">
+                                <input type="submit" id="loginn" class="form-control btn-success" name="Submit" value="登 录">
+                              </div>
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-8">
+                            <a href="./register.html" class="btn btn-link">立即注册</a>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-link">忘记密码？</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-link">忘记手机号？</button>
+                </div>
+            </div>
+        </div>
+        <!-- 主内容结束 -->
+    </div>
+
+    <hr />
+
+    <!-- 脚注 -->
+    <div class="container">
+        <footer class="footer">
+            <ul>
+                <li><a href='./tos'>服务条款</a></li> <span class="sep">|</span>
+                <li><a href='/privacy'>隐私政策</a></li><span class="sep">|</span>
+                <li><a href='https://blog.csdn.net/qq_41550842' target="_blank">Author：TinySpot</a></li><span class="sep">|</span>
+                <li><a href='/faq'>FAQ</a></li><span class="sep">|</span>
+                <li><a href='/contact'>联系我们</a></li>
+            </ul>
+        <div class="text-center">
+            <small id="copyright">Copyright Since 2019 &copy;<a href="http://127.0.0.1:8080">TinySpot Inc.</a> All rights reserved.</small>
+        </div>
+        </footer>
+    </div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="./bootstrapvalidator054/dist/js/bootstrapValidator.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                function randomNumber(min, max){
+                    return Math.floor(Math.random()*(max-min+1) + min);
+                };
+                function randomOpt(){
+                    var n = randomNumber(1,4);
+                    switch (n) {
+                        case 1: return '+';
+                        case 2: return '-';
+                        default: return '*';
+                    }
+                }
+                function generateCaptcha(){
+                    $('#captchaOpt').html([randomNumber(1,100), randomOpt(),
+                    randomNumber(1,100), '='].join(' '));
+                };
+                generateCaptcha();
+                $(loginForm).bootstrapValidator({
+                    message: 'This value is not valid!',
+                    feedbackIcons:{
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields:{
+                        phoneNumber:{
+                            message: '手机号无效',
+                            validators:{
+                                notEmpty:{
+                                    message: '手机号不能为空'
+                                },
+                            }
+                        },
+                        password:{
+                            validators:{
+                                notEmpty:{
+                                    message:'密码不能为空'
+                                },
+                            }
+                        },
+                        captcha:{
+                            validators:{
+                                callback:{
+                                    message:'答案错误或未输入验证码',
+                                    callback: function(value,validator){
+                                        var items = $('#captchaOpt').html().split(' ');
+                                        if(String(items[1]) == '+')
+                                            sum = parseInt(items[0]) + parseInt(items[2]);
+                                        else if(String(items[1]) == '-')
+                                            sum = parseInt(items[0]) - parseInt(items[2]);
+                                        else sum = parseInt(items[0]) * parseInt(items[2]);
+                                        return value == sum;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                })
+                .on('error.form.bv', function(e){
+                    var $form = $(e.target),
+                    bootstrapValidator = $form.data('bootstrapValidator');
+                    if(! bootstrapValidator.isValidField('captcha')){
+                        generateCaptcha();
+                    }
+                });
+            });
+        </script>
+</body>
+</html>
