@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tinyspot.bs.dao.BookMapper">
+  <resultMap id="BaseResultMap" type="com.tinyspot.bs.bean.Book">
+    <id column="b_id" jdbcType="INTEGER" property="bId" />
+    <result column="b_s_id" jdbcType="INTEGER" property="bSId" />
+    <result column="b_bc_id" jdbcType="INTEGER" property="bBcId" />
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="b_price" jdbcType="REAL" property="bPrice" />
+    <result column="b_discount" jdbcType="REAL" property="bDiscount" />
+    <result column="b_stock" jdbcType="SMALLINT" property="bStock" />
+    <result column="b_author" jdbcType="VARCHAR" property="bAuthor" />
+    <result column="b_press" jdbcType="VARCHAR" property="bPress" />
+    <result column="b_pub_date" jdbcType="DATE" property="bPubDate" />
+    <result column="b_picture" jdbcType="VARCHAR" property="bPicture" />
+    <result column="b_state" jdbcType="TINYINT" property="bState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    b_id, b_s_id, b_bc_id, b_name, b_price, b_discount, b_stock, b_author, b_press, b_pub_date, 
+    b_picture, b_state
+  </sql>
+  <select id="selectByExample" parameterType="com.tinyspot.bs.bean.BookExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <!--  Short selectBookStockById(@Param("bId")Integer bId); -->
+  <select id="selectBookStockById" resultType="java.lang.Integer">
+  	select b_stock from book where b_id = #{bId}
+  </select>
+  
+  <!-- List<Book> selectBriefByExample(); -->
+  <select id="selectBriefByExample" resultMap="BaseResultMap">
+  	select b_id, b_s_id, b_bc_id,b_name,b_price,b_discount,b_picture from book where b_state=1
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where b_id = #{bId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book
+    where b_id = #{bId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tinyspot.bs.bean.BookExample">
+    delete from book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tinyspot.bs.bean.Book">
+    insert into book (b_id, b_s_id, b_bc_id, 
+      b_name, b_price, b_discount, 
+      b_stock, b_author, b_press, 
+      b_pub_date, b_picture, b_state
+      )
+    values (#{bId,jdbcType=INTEGER}, #{bSId,jdbcType=INTEGER}, #{bBcId,jdbcType=INTEGER}, 
+      #{bName,jdbcType=VARCHAR}, #{bPrice,jdbcType=REAL}, #{bDiscount,jdbcType=REAL}, 
+      #{bStock,jdbcType=SMALLINT}, #{bAuthor,jdbcType=VARCHAR}, #{bPress,jdbcType=VARCHAR}, 
+      #{bPubDate,jdbcType=DATE}, #{bPicture,jdbcType=VARCHAR}, #{bState,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tinyspot.bs.bean.Book">
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        b_id,
+      </if>
+      <if test="bSId != null">
+        b_s_id,
+      </if>
+      <if test="bBcId != null">
+        b_bc_id,
+      </if>
+      <if test="bName != null">
+        b_name,
+      </if>
+      <if test="bPrice != null">
+        b_price,
+      </if>
+      <if test="bDiscount != null">
+        b_discount,
+      </if>
+      <if test="bStock != null">
+        b_stock,
+      </if>
+      <if test="bAuthor != null">
+        b_author,
+      </if>
+      <if test="bPress != null">
+        b_press,
+      </if>
+      <if test="bPubDate != null">
+        b_pub_date,
+      </if>
+      <if test="bPicture != null">
+        b_picture,
+      </if>
+      <if test="bState != null">
+        b_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="bSId != null">
+        #{bSId,jdbcType=INTEGER},
+      </if>
+      <if test="bBcId != null">
+        #{bBcId,jdbcType=INTEGER},
+      </if>
+      <if test="bName != null">
+        #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bPrice != null">
+        #{bPrice,jdbcType=REAL},
+      </if>
+      <if test="bDiscount != null">
+        #{bDiscount,jdbcType=REAL},
+      </if>
+      <if test="bStock != null">
+        #{bStock,jdbcType=SMALLINT},
+      </if>
+      <if test="bAuthor != null">
+        #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bPress != null">
+        #{bPress,jdbcType=VARCHAR},
+      </if>
+      <if test="bPubDate != null">
+        #{bPubDate,jdbcType=DATE},
+      </if>
+      <if test="bPicture != null">
+        #{bPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="bState != null">
+        #{bState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tinyspot.bs.bean.BookExample" resultType="java.lang.Long">
+    select count(*) from book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update book
+    <set>
+      <if test="record.bId != null">
+        b_id = #{record.bId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bSId != null">
+        b_s_id = #{record.bSId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bBcId != null">
+        b_bc_id = #{record.bBcId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bName != null">
+        b_name = #{record.bName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPrice != null">
+        b_price = #{record.bPrice,jdbcType=REAL},
+      </if>
+      <if test="record.bDiscount != null">
+        b_discount = #{record.bDiscount,jdbcType=REAL},
+      </if>
+      <if test="record.bStock != null">
+        b_stock = #{record.bStock,jdbcType=SMALLINT},
+      </if>
+      <if test="record.bAuthor != null">
+        b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPress != null">
+        b_press = #{record.bPress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPubDate != null">
+        b_pub_date = #{record.bPubDate,jdbcType=DATE},
+      </if>
+      <if test="record.bPicture != null">
+        b_picture = #{record.bPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bState != null">
+        b_state = #{record.bState,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update book
+    set b_id = #{record.bId,jdbcType=INTEGER},
+      b_s_id = #{record.bSId,jdbcType=INTEGER},
+      b_bc_id = #{record.bBcId,jdbcType=INTEGER},
+      b_name = #{record.bName,jdbcType=VARCHAR},
+      b_price = #{record.bPrice,jdbcType=REAL},
+      b_discount = #{record.bDiscount,jdbcType=REAL},
+      b_stock = #{record.bStock,jdbcType=SMALLINT},
+      b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      b_press = #{record.bPress,jdbcType=VARCHAR},
+      b_pub_date = #{record.bPubDate,jdbcType=DATE},
+      b_picture = #{record.bPicture,jdbcType=VARCHAR},
+      b_state = #{record.bState,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tinyspot.bs.bean.Book">
+    update book
+    <set>
+      <if test="bSId != null">
+        b_s_id = #{bSId,jdbcType=INTEGER},
+      </if>
+      <if test="bBcId != null">
+        b_bc_id = #{bBcId,jdbcType=INTEGER},
+      </if>
+      <if test="bName != null">
+        b_name = #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bPrice != null">
+        b_price = #{bPrice,jdbcType=REAL},
+      </if>
+      <if test="bDiscount != null">
+        b_discount = #{bDiscount,jdbcType=REAL},
+      </if>
+      <if test="bStock != null">
+        b_stock = #{bStock,jdbcType=SMALLINT},
+      </if>
+      <if test="bAuthor != null">
+        b_author = #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bPress != null">
+        b_press = #{bPress,jdbcType=VARCHAR},
+      </if>
+      <if test="bPubDate != null">
+        b_pub_date = #{bPubDate,jdbcType=DATE},
+      </if>
+      <if test="bPicture != null">
+        b_picture = #{bPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="bState != null">
+        b_state = #{bState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tinyspot.bs.bean.Book">
+    update book
+    set b_s_id = #{bSId,jdbcType=INTEGER},
+      b_bc_id = #{bBcId,jdbcType=INTEGER},
+      b_name = #{bName,jdbcType=VARCHAR},
+      b_price = #{bPrice,jdbcType=REAL},
+      b_discount = #{bDiscount,jdbcType=REAL},
+      b_stock = #{bStock,jdbcType=SMALLINT},
+      b_author = #{bAuthor,jdbcType=VARCHAR},
+      b_press = #{bPress,jdbcType=VARCHAR},
+      b_pub_date = #{bPubDate,jdbcType=DATE},
+      b_picture = #{bPicture,jdbcType=VARCHAR},
+      b_state = #{bState,jdbcType=TINYINT}
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,84 @@
+/*!
+ * IE10 viewport hack for Surface/desktop Windows 8 bug
+ * Copyright 2014-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/*
+ * See the Getting Started docs for more information:
+ * http://getbootstrap.com/getting-started/#support-ie10-width
+ */
+@-ms-viewport     { width: device-width; }
+@-o-viewport      { width: device-width; }
+@viewport         { width: device-width; }
+.search_now_price {
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+    color: #fa5000;
+    font-size: 14px;
+    overflow: hidden;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.search_pre_price {
+    color: #969696;
+    text-decoration: line-through;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+}
+.search_discount {
+    color: #969696;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+}
+.add_cart_btn{
+	/* float:right; */
+	background-color:#ff2832;
+	margin-top:10px;
+}
+.price_info {
+    background-color: #fcfaf7;
+    padding-top: 20px;
+    padding-bottom: 15px;
+   /*  padding: 0 0 7px 10px;
+    margin: 6px 0; */
+    /* position: relative;    
+    z-index: 6666; */
+
+}
+.now_price {
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+    color: #e52222;
+    font-size: 26px;
+    overflow: hidden;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.pre_price {
+    color: #969696;
+    text-decoration: line-through;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+}
+.bDiscount {
+    color: #e52222;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+}
+.ppre_price {
+    color: #969696;
+   /*  text-decoration: line-through; */
+    font-size: 15px;
+    font-weight: normal;
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+}
+#table{
+	border: 11px solid #e5e9ee; 
+}
+#table>tbody>tr>td{ 
+	    border-bottom-width: 1px;
+	    border-top-width: 0px;
+   }

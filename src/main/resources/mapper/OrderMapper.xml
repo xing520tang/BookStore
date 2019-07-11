@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tinyspot.bs.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.tinyspot.bs.bean.Order">
+    <id column="o_id" jdbcType="INTEGER" property="oId" />
+    <result column="o_u_id" jdbcType="INTEGER" property="oUId" />
+    <result column="o_b_id" jdbcType="INTEGER" property="oBId" />
+    <result column="o_num" jdbcType="SMALLINT" property="oNum" />
+    <result column="o_state" jdbcType="TINYINT" property="oState" />
+    <result column="o_date" jdbcType="TIMESTAMP" property="oDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    o_id, o_u_id, o_b_id, o_num, o_state, o_date
+  </sql>
+  <select id="selectByExample" parameterType="com.tinyspot.bs.bean.OrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oorder
+    where o_id = #{oId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oorder
+    where o_id = #{oId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tinyspot.bs.bean.OrderExample">
+    delete from oorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tinyspot.bs.bean.Order">
+    insert into oorder (o_id, o_u_id, o_b_id, 
+      o_num, o_state, o_date
+      )
+    values (#{oId,jdbcType=INTEGER}, #{oUId,jdbcType=INTEGER}, #{oBId,jdbcType=INTEGER}, 
+      #{oNum,jdbcType=SMALLINT}, #{oState,jdbcType=TINYINT}, #{oDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <!-- OrderInfo selectOrderAndBookByOBIdAndOUId(@Param("oBId") Integer oBId, @Param("oUId")Integer oUId);
+  private String bName;
+	private String bPicture;
+	private Float bPrice;
+	private Short oNum; -->
+  <select id="selectOrderAndBookByOBIdAndOUId" resultType="com.tinyspot.bs.bean.OrderInfo">
+  		select book.b_id, book.b_name, book.b_picture,book.b_discount, book.b_price, oorder.o_num 
+  		from book,oorder
+  		where book.b_id=#{oBId} and oorder.o_u_id=#{oUId} and oorder.o_b_id=#{oBId}
+  </select>
+  
+  <!-- List<BOrderInfo> selectBOrderInfoByUIdAnd(); 
+  	private Integer oId;
+	private Byte oState;
+	private Short oNum;
+	private Date oDate;
+	private Float bPrice;
+    private Float bDiscount;
+    private String bName;
+    private String bPicture;
+    private String uPhone;
+    private String uAddress;
+    查询商家后台需要的订单信息
+  -->
+  <select id="selectBOrderInfoByUIdAnd">
+  		<!-- select oorder.o_id, oorder.o_state, oorder.o_num, oorder.o_date,
+  		book.b_price, book.b_discount, book.b_name, book.b_picture, 
+  		user.u_phone, user.u_address
+  		from user, oorder, book
+  		where oorder.o_b_id in (
+  			select b_id from book where b_s_id = #{sId}
+  		) -->
+  		select oorder.o_id, oorder.o_state, oorder.o_num, oorder.o_date from oorder where 
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.tinyspot.bs.bean.Order">
+    insert into oorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="oUId != null">
+        o_u_id,
+      </if>
+      <if test="oBId != null">
+        o_b_id,
+      </if>
+      <if test="oNum != null">
+        o_num,
+      </if>
+      <if test="oState != null">
+        o_state,
+      </if>
+      <if test="oDate != null">
+        o_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="oUId != null">
+        #{oUId,jdbcType=INTEGER},
+      </if>
+      <if test="oBId != null">
+        #{oBId,jdbcType=INTEGER},
+      </if>
+      <if test="oNum != null">
+        #{oNum,jdbcType=SMALLINT},
+      </if>
+      <if test="oState != null">
+        #{oState,jdbcType=TINYINT},
+      </if>
+      <if test="oDate != null">
+        #{oDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tinyspot.bs.bean.OrderExample" resultType="java.lang.Long">
+    select count(*) from oorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update oorder
+    <set>
+      <if test="record.oId != null">
+        o_id = #{record.oId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oUId != null">
+        o_u_id = #{record.oUId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oBId != null">
+        o_b_id = #{record.oBId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oNum != null">
+        o_num = #{record.oNum,jdbcType=SMALLINT},
+      </if>
+      <if test="record.oState != null">
+        o_state = #{record.oState,jdbcType=TINYINT},
+      </if>
+      <if test="record.oDate != null">
+        o_date = #{record.oDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update oorder
+    set o_id = #{record.oId,jdbcType=INTEGER},
+      o_u_id = #{record.oUId,jdbcType=INTEGER},
+      o_b_id = #{record.oBId,jdbcType=INTEGER},
+      o_num = #{record.oNum,jdbcType=SMALLINT},
+      o_state = #{record.oState,jdbcType=TINYINT},
+      o_date = #{record.oDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tinyspot.bs.bean.Order">
+    update oorder
+    <set>
+      <if test="oUId != null">
+        o_u_id = #{oUId,jdbcType=INTEGER},
+      </if>
+      <if test="oBId != null">
+        o_b_id = #{oBId,jdbcType=INTEGER},
+      </if>
+      <if test="oNum != null">
+        o_num = #{oNum,jdbcType=SMALLINT},
+      </if>
+      <if test="oState != null">
+        o_state = #{oState,jdbcType=TINYINT},
+      </if>
+      <if test="oDate != null">
+        o_date = #{oDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tinyspot.bs.bean.Order">
+    update oorder
+    set o_u_id = #{oUId,jdbcType=INTEGER},
+      o_b_id = #{oBId,jdbcType=INTEGER},
+      o_num = #{oNum,jdbcType=SMALLINT},
+      o_state = #{oState,jdbcType=TINYINT},
+      o_date = #{oDate,jdbcType=TIMESTAMP}
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+</mapper>
