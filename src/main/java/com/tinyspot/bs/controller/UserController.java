@@ -139,50 +139,95 @@ public class UserController {
 	}
 	
 	/**
-	 * 只处理post请求，用于普通用户注册
+	 * 只处理post请求，用于商家用户注册
 	 * @param mode
 	 * @return
 	 */
 	@RequestMapping(value = "/bRegister", method = RequestMethod.POST)
-	@ResponseBody
-	public Msg bRegister(User user, Shop shop, HttpServletRequest req) {
+	public String bRegister(User user, Shop shop, HttpServletRequest req, RedirectAttributes ra) {
 		System.out.println("\nBRegister:POST******");
 		System.out.println(user);
 		System.out.println(shop);
 		String addrDetail = req.getParameter("addrDetail");
 		System.out.println(addrDetail);
-		Msg msg = Msg.fail();
 		System.out.println("密码md5："+(String)Md5.getMd5(user.getuPassword()).getExtend().get("md5"));
-		//检验电话号码是否唯一
-		boolean phoneIsUnique = userService.phoneIsUnique(user.getuPhone());
-		if(phoneIsUnique) {
-			//其他检验....
-			//插入店铺用户信息
-			user.setuPassword((String)Md5.getMd5(user.getuPassword()).getExtend().get("md5"));
-			user.setuRegisterDate(new Date());
-			user.setuRId((byte)2); //店家
-			user.setuState((byte)0); //冻结
-			int  uId = userService.saveUserReturnUId(user);
-			if(uId == 0) {
-				msg.setMsg("系统 错误，提交失败");
-				return msg;
-			}else {
-				shop.setsAddress(shop.getsAddress()+"/"+addrDetail);
-				shop.setsState((byte)0); //冻结
-				shop.setsUId(uId);
-				int sId = shopService.saveShopReturnSId(shop);
-				if(sId == 0) {
-					msg.setMsg("系统异常，请重试");
-					return msg;
+		//检验店铺名称是否合法
+		boolean sNameIsValid = shopService.sNameIsValid(shop.getsName());
+		if(sNameIsValid) {
+			//检验店铺描述是否合法
+			boolean sDescIsValid = shopService.sDescIsValid(shop.getsDesc());
+			if(sDescIsValid) {
+				//检验详细地址是否合法（长度）
+				boolean sAddrDetailIsValid = shopService.sAddrDetailIsValid(req.getParameter("addrDetail"));
+				if(sAddrDetailIsValid) {
+					//检验电话号码是否全是数字，并且是否合法
+					boolean phoneIsNum = mainService.PhoneIsNum(user.getuPhone());
+					if(phoneIsNum) {
+						//检验电话号码是否唯一
+						boolean phoneIsUnique = userService.phoneIsUnique(user.getuPhone());
+						if(phoneIsUnique) {
+							//检验登录密码是否符合要求
+							boolean passIsValid = mainService.passIsValid(user.getuPassword());
+							if(passIsValid) {
+								//插入店铺用户信息
+								user.setuPassword((String)Md5.getMd5(user.getuPassword()).getExtend().get("md5"));
+								user.setuRegisterDate(new Date());
+								user.setuRId((byte)2); //店家
+								user.setuState((byte)0); //冻结
+								user.setuNickname(shop.getsName());
+								
+								if(addrDetail==null)
+									user.setuAddress(shop.getsAddress()+"/");
+								else 
+									user.setuAddress(shop.getsAddress()+"/"+addrDetail);
+								userService.saveUserReturnUId(user);
+								int  uId = user.getuId();  //获取刚刚插入的数据的id
+								if(uId == 0) {
+									req.setAttribute("message", "系统错误，提交失败");
+									return "bRegister";
+								}else {
+									
+									if(addrDetail==null)
+										shop.setsAddress(shop.getsAddress()+"/");
+									else 
+										shop.setsAddress(shop.getsAddress()+"/"+addrDetail);
+									
+									shop.setsState((byte)0); //冻结
+									shop.setsUId(uId);
+									int sId = shopService.saveShopReturnSId(shop);
+									if(sId == 0) {
+										req.setAttribute("message", "系统错误，请重试");
+										return "bRegister";
+									}
+								}
+							}else {
+								req.setAttribute("message", "密码格式不合法");
+								return "bRegister";
+							}
+						}else {
+							req.setAttribute("message", "该电话号码已被注册！");
+							return "bRegister";
+						}
+					}else {
+						req.setAttribute("message", "电话号码不合法");
+						return "bRegister";
+					}
+					
+				}else {
+					req.setAttribute("message", "详细地址不合法");
+					return "bRegister";
 				}
+			}else {
+				req.setAttribute("message", "店铺描述不合法");
+				return "bRegister";
 			}
 		}else {
-			msg.setMsg("该电话号码已被注册！");
-			return msg;
+			req.setAttribute("message", "店铺名不合法");
+			return "bRegister";
 		}
 		
-		msg.setCode(Msg.SUCCESS);
-		msg.setMsg("提交成功，请耐心等待审核~");
-		return msg;
+		System.out.println("提交成功");
+		ra.addFlashAttribute("message", "提交成功，请耐心等待审核~");
+		return "redirect:main";
 	}
 }

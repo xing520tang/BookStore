@@ -108,7 +108,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tinyspot.bs.bean.User">
+  <insert id="insert" parameterType="com.tinyspot.bs.bean.User"
+  useGeneratedKeys="true" keyProperty="uId">
     insert into user (u_id, u_nickname, u_phone, 
       u_password, u_address, u_r_id, 
       u_state, u_register_date)

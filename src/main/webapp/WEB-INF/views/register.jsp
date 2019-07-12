@@ -14,7 +14,7 @@
   <meta name="description" content="bookstore">
   <meta name="author" content="tinyspot">
   <link rel="icon" href="${SourcePath }/imgs/favicon.ico">
-  <title>标题</title>
+  <title>用户注册</title>
   <link rel="stylesheet" href="${SourcePath }/bootstrap-3.3.7-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="${SourcePath }/bootstrapvalidator054/dist/css/bootstrapValidator.min.css">
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -122,7 +122,7 @@
                                       <div class="input-group">
                                           <span class="input-group-addon requiredAfter">手机号码</span>
                                           <input type="text" class="form-control input-md" name="uPhone" placeholder="请输入手机号码"
-                                          data-bv-different="true" data-bv-different-field="password" data-bv-different-message="手机号不能与密码相同"
+                                          data-bv-different="true" data-bv-different-field="uPassword" data-bv-different-message="手机号不能与密码相同"
                                           data-bv-field="phoneNumber">
                                       </div>
                                  </div>
@@ -138,7 +138,7 @@
                                           <span class="input-group-addon requiredAfter">登录密码</span>
                                           <input type="password" class="form-control input-md" name="uPassword" placeholder="请输入登录密码"
                                           data-bv-identical="true" data-bv-identical-field="passwordConfirm" data-bv-identical-message="两次输入密码不一致"
-                                          data-bv-different="true" data-bv-different-field="phoneNumber" data-bv-different-message="密码不能和手机号相同"
+                                          data-bv-different="true" data-bv-different-field="uPhone" data-bv-different-message="密码不能和手机号相同"
                                           data-bv-field="uPassword">
                                       </div>
                                  </div>
@@ -391,24 +391,8 @@
                     }
                 })<%--表单验证成功后--%>
                 .on('success.form.bv', function(e) {
-    	       		$("#loginForm").serialize()<%--序列化表单数据--%>
+    	       		$("#registerForm").serialize()<%--序列化表单数据--%>
                 })
-                
-                <%--注册按钮监听--%>
-                /* function register() {
-					$.ajax({
-						url: "${APP_PATH}/register",
-						type: "POST",
-						data:$("#registerForm").serialize(),
-						success: function (data) {
-							console.log(data);
-							alert(data.msg);
-							if(data.code == 100)
-								window.location.href="${APP_PATH}/login";
-							return false;
-						}
-					});
-				} */
                 
                 <%--判断是否有消息，有就提示出来--%>
                 var msg = $("#message").val();
