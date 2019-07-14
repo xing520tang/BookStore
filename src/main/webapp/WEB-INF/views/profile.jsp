@@ -23,6 +23,9 @@
     <!-- 导入地区选择所需包 -->
   <link href="${SourcePath }/assets/city-picker/city-picker.css" rel="stylesheet" type="text/css" />
   <script src="${SourcePath }/assets/js/ie-emulation-modes-warning.js"></script>
+  
+  <%--导入消息提示需要的css --%>
+  <link href="${SourcePath }/toastr/toastr.min.css" rel="stylesheet">
   <style>
       .nav > li:hover .dropdown-menu{display: block;}
   </style>
@@ -58,7 +61,7 @@
                     	<li class="dropdown">
 		                      <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 		                      	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-		                      	${uNickName }<span class="caret"></span></a>
+		                      	<span id="uNickName">${uNickName }</span><span class="caret"></span></a>
 		                      <ul class="dropdown-menu">
 		                          <li><a href="${APP_PATH }/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"> 个人中心</span></a></li>
 		                          <li><a href="${APP_PATH }/myOrder"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"> 我的订单</span></a></li>
@@ -71,7 +74,7 @@
                     	<li class="dropdown">
 		                      <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 		                      	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-		                      	${uNickName } <span class="caret"></span></a>
+		                      	<span id="uNickName">${uNickName }</span> <span class="caret"></span></a>
 		                      <ul class="dropdown-menu">
 		                          <li><a href="${APP_PATH }/shopManage"><span class="glyphicon glyphicon-th" aria-hidden="true"> 店铺管理</span></a></li>
 		                          <li role="separator" class="divider"></li>
@@ -83,7 +86,7 @@
                     	<li class="dropdown">
 		                      <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 		                      	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-		                      	${uNickName } <span class="caret"></span></a>
+		                      	<span id="uNickName">${uNickName }</span> <span class="caret"></span></a>
 		                      <ul class="dropdown-menu">
 		                          <li><a href="${APP_PATH }/manage"><span class="glyphicon glyphicon-th" aria-hidden="true"> 后台管理</span></a></li>
 		                          <li role="separator" class="divider"></li>
@@ -105,13 +108,14 @@
               <p style="text-align:center;">
                 亲爱的<strong>
                   <span class="glyphicon glyphicon-user"  id="uuNickName" aria-hidden="true"></span></strong>
-                ，填写真实资料有助于XXX哦
+                ，填写真实资料有助于卖家发货哦
               </p>
             </div>
             <hr>
             <!-- 个人信息展示 -->
             <div class="row">
-              <form action="javascript:void(0)" id="profileForm" method="post">
+              <form action="javascript:save()" id="profileForm" method="post">
+              	<input type="text" id="uId" class="sr-only" name="uId"  >
                 <!-- 昵称 -->
                 <div class="form-horizontal">
                     <div class="form-group">
@@ -119,7 +123,8 @@
                       <div class="col-md-6">
                            <div class="input-group">
                                <span class="input-group-addon">昵&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 称</span>
-                               <input type="text" class="form-control input-md" id="uNickName" name="uNickName" placeholder="tinyspot">
+                               <input type="text" class="form-control input-md" id="uNickname" name="uNickname"
+                               onchange="change()" placeholder="tinyspot">
                            </div>
                       </div>
                     </div>
@@ -132,7 +137,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon">注册手机</span>
-                                 <input disabled type="text" class="form-control input-md" id="uPhone" name="phoneNumber" placeholder="请输入手机号码">
+                                 <input disabled type="text" class="form-control input-md" id="uPhone" name="uPhone" placeholder="请输入手机号码">
                              </div>
                         </div>
                       </div>
@@ -184,10 +189,11 @@
                       <label for="" class="col-md-1 col-md-offset-3 control-label"style="font-weight:400; color:#555;">收货地址</label>
                       <div  class="col-md-3">
                             <input id="city-picker3" readonly type="text" class="form-control"
-                             data-bv-field="storeAddr">
+                            name="uAddress" onchange="change()" data-bv-field="storeAddr">
                       </div>
                       <div class="col-md-2">
-                            <input class="form-control" id="specificAdd" placeholder="输入详细地址" data-bv-field="storeAddrDetail"></input>
+                            <input class="form-control" id="specificAdd" placeholder="输入详细地址" 
+                            name="uAddressDetail" onchange="change()" data-bv-field="storeAddrDetail"></input>
                       </div>
                     </div>
                   </div>
@@ -197,7 +203,7 @@
                       <div class="form-group">
                         <!-- <label class="col-md-5 control-label"></label> -->
                         <div class="col-md-2 col-md-offset-5">
-                          <input type="submit" id="loginn" class="form-control btn-success" name="Submit" value="保 存">
+                          <input disabled="disabled" type="submit" id="loginn" class="form-control btn-success" name="Submit" value="保 存">
                         </div>
                       </div>
                   </div>
@@ -249,12 +255,33 @@
         <script type="text/javascript" src="${SourcePath }/assets/city-picker/city-picker.js"></script>
         <script type="text/javascript" src="${SourcePath }/assets/city-picker/main.js"></script>
         
+         <%--导入消息提示需要的js --%>
+        <script src="${SourcePath }/toastr/toastr.min.js"></script>
+        
         <script type="text/javascript">
         	$(function(){
         		getProfileDate();
         		
         		$city = $("#city-picker3");
         		
+        		<%--提示信息初始化--%>
+    			toastr.options = {
+    					  "closeButton": true,
+    					  "debug": false,
+    					  "newestOnTop": true,
+    					  "progressBar": false,
+    					  "positionClass": "toast-top-right",
+    					  "preventDuplicates": true,
+    					  "onclick": null,
+    					  "showDuration": "300",
+    					  "hideDuration": "1000",
+    					  "timeOut": "5000",
+    					  "extendedTimeOut": "1000",
+    					  "showEasing": "swing",
+    					  "hideEasing": "linear",
+    					  "showMethod": "fadeIn",
+    					  "hideMethod": "fadeOut"
+    					}
         	});
         	function getProfileDate() {
 				$.ajax({
@@ -268,7 +295,8 @@
 			}
         	<%--将用户数据插入表单--%>
         	function insertDateToForm(data) {
-				$("#uNickName").val(data.extend.user.uNickname);
+        		$("#uId").val(data.extend.user.uId);
+				$("#uNickname").val(data.extend.user.uNickname);
 				$("#uPhone").val(data.extend.user.uPhone);
 				$("#uRegisterDate").empty();
 				$("#uRegisterDate").append(new Date(data.extend.user.uRegisterDate).toLocaleDateString());
@@ -280,6 +308,30 @@
 		        $city.citypicker();
 				$("#uuNickName").append(data.extend.user.uNickname);
 			}
+        	<%--信息被修改时，保存按钮激活--%>
+        	function change(){
+        		$("#loginn").removeAttr("disabled");
+        	}
+        	function save(){
+        		$.ajax({
+        			url:"${APP_PATH}/saveProfile",
+        			type:"POST",
+        			data:$("#profileForm").serialize(),
+        			success:function(result){
+        				console.log(result);
+        				$("#uNickName").empty();
+        				$("#uNickName").append($("#uNickname").val())//导航栏昵称要变
+        				$("#uuNickName").empty();
+        				$("#uuNickName").append($("#uNickname").val());
+        				if(result.code == 100){
+        					toastr["success"](result.msg);
+        				}
+        			},
+        			error:function(){
+        				toastr["error"]("系统错误，请重试");
+        			}
+        		});
+        	}
         </script>
 </body>
 </html>

@@ -82,4 +82,12 @@ public class UserService {
 		}
 		return id;
 	}
+
+	/**
+	 * 根据用户id，有选择的更新
+	 * @param user
+	 */
+	public void updateUser(User user) {
+		userMapper.updateByPrimaryKeySelective(user);
+	}
 }

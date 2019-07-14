@@ -57,7 +57,55 @@ public class UserController {
 		HttpSession session = req.getSession();
 		User user = userService.verify((String)session.getAttribute("uPhone"), (String)session.getAttribute("uPassword"));
 		user.setuPassword("hello world!");
+		user.setuRId((byte)(66));
+		user.setuState((byte)66);
 		return Msg.success().add("user", user);
+	}
+	
+	/**
+	 * 保存用户修改的信息
+	 * @param req
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping("/saveProfile")
+	@ResponseBody
+	public Msg saveProfile(HttpServletRequest req, User user) {
+		System.out.println("saveProfile****保存用户修改的信息");
+		System.out.println("user: "+user);
+		String addrDetail = req.getParameter("uAddressDetail");
+		System.out.println("addrDetail: "+ addrDetail );
+		Msg msg = Msg.success();
+		//验证昵称是否合法
+		boolean nickNameIsValid = mainService.nickNameIsValid(user.getuNickname());
+		if(nickNameIsValid) {
+			//检验详细地址是否合法
+			boolean uAddrDetailIsValid = shopService.sAddrDetailIsValid(addrDetail);
+			if(uAddrDetailIsValid) {
+				if(addrDetail==null || addrDetail.equals(""))
+					user.setuAddress(user.getuAddress()+"/");
+				else user.setuAddress(user.getuAddress()+"/"+addrDetail);
+				try {
+					userService.updateUser(user);
+					req.getSession().setAttribute("uNickName", user.getuNickname());
+				}catch (Exception e) {
+					e.printStackTrace();
+					msg.setCode(Msg.FAIL);
+					msg.setMsg("系统错误，请重试");
+					return msg;
+				}
+			}else {
+				msg.setCode(Msg.FAIL);
+				msg.setMsg("详细地址格式不合法，长度不超过30~");
+				return msg;
+			}
+		}else {
+			msg.setCode(Msg.FAIL);
+			msg.setMsg("昵称格式不合法");
+			return msg;
+		}
+		msg.setMsg("更新成功");
+		return msg;
 	}
 
 
