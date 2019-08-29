@@ -46,7 +46,7 @@ public class mainController {
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainPage(HttpServletRequest request) {
-		System.out.println("\nmain:GET******");
+		System.out.println("main:GET******");
 		 Role role = mainService.getRole(request.getSession());
 		 request.setAttribute("role", role); //放回请求域，方便jsp页面使用
 		return "index";
@@ -54,7 +54,7 @@ public class mainController {
 	
 	@RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
 	public String shoppingCartPage(HttpServletRequest request) {
-		System.out.println("\nshoppingCart******");
+		System.out.println("shoppingCart******");
 		Role role = mainService.getRole(request.getSession());
 		request.setAttribute("role", role); //放回请求域，方便jsp页面使用
 		if(role.getIdentity() == Role.ANONYMOUS)
@@ -69,7 +69,7 @@ public class mainController {
 	 */
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String toLoginPage(HttpServletRequest request) {
-		System.out.println("\nlogin:GET******");
+		System.out.println("login:GET******");
 		Role role = mainService.getRole(request.getSession());
 		System.out.println("login:GET "+role);
 		if(role.getIdentity() != Role.ANONYMOUS)
@@ -84,7 +84,7 @@ public class mainController {
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	//@ResponseBody
 	public String login(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		System.out.println("\nlogin:POST******登录验证");
+		System.out.println("login:POST******登录验证");
 		System.out.println("password: "+request.getParameter("password"));
 		User user = userService.verify(request.getParameter("phoneNumber"), request.getParameter("password"));
 		if(user != null) { //验证成功
@@ -101,14 +101,14 @@ public class mainController {
 					System.out.println("该店家的账号存在问题！！！！");
 				session.setAttribute("sId", shopList.get(0).getsId()); //将该店家的店铺id存入session
 			}
-			System.out.println("登陆成功");
+			System.out.println("登录成功");
 			//return Msg.success();
 			redirectAttributes.addFlashAttribute("message", "登陆成功");//使用redirectAttribute将数据传入重定向的页面当中
 			return "redirect:main";
 		}
-		System.out.println("登陆失败");
+		System.out.println("登录失败");
 		//return Msg.fail().add("msg", "登陆失败");
-		request.setAttribute("message", "登陆失败");
+		request.setAttribute("message", "登录失败");
 		return "login";
 	}
 	
@@ -119,7 +119,7 @@ public class mainController {
 	 */
 	@RequestMapping("/exit")
 	public String exit(HttpServletRequest request) {
-		System.out.println("\nexit:GET******");
+		System.out.println("exit:GET******");
 		//清楚session中的密码等信息
 		HttpSession session = request.getSession();
 		session.removeAttribute("uId");
@@ -169,7 +169,7 @@ public class mainController {
 	 */
 	@RequestMapping(value = "/goodsDetail/{bId}", method = RequestMethod.GET)
 	public String goodsDetailPage(@PathVariable(value = "bId")Integer bId, HttpServletRequest request) {
-		System.out.println("\ngoodsDetail/"+bId+"******");
+		System.out.println("goodsDetail/"+bId+"******");
 		Role role = mainService.getRole(request.getSession());
 		request.setAttribute("role", role);
 		request.setAttribute("bId", bId);//把bid放入请求域，在jsp中取出来放入一个标签中，用于发送书本详情数据的请求

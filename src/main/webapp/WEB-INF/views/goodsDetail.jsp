@@ -117,7 +117,8 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 price_info">
                                 <span>
                                 	<span class=" now_price col-md-5">￥</span>
-                                	<span class="pre_price col-md-6">定价:￥ <span></span>&nbsp;</span>
+                                	<span class="pre_price col-md-3">定价:￥ <span></span>&nbsp;</span>
+                                	<span class="stock col-md-3" >库存:<span></span>&nbsp;</span>
                                 </span>
                             </div>
 							<%--价格板块完 --%>
@@ -127,7 +128,7 @@
                                       <span class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="numSub" onclick="sub()" disabled>-</button>
                                       </span>
-                                      <input type="text" id="bookNum" class="form-control" value="1" onchange="inputChange()" style="text-align:center;" disabled>
+                                      <input type="text" id="bookNum" class="form-control" value="1" onkeyup="inputChange()" style="text-align:center;" disabled>
                                       <span class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="numAdd" onclick="add()">+</button>
                                       </span>
@@ -190,11 +191,16 @@
         <script>
                   function add(){
                       var num = document.getElementById("bookNum");
+                      if(num.value == $(".stock").attr("stock")){
+                    	  toastr["info"]("最多只有"+$(".stock").attr("stock")+"本书可购买哦~");
+                    	  return;
+                      }
                       num.value++;
                       if(num.value > 1){
                           num.disabled=false;
                           document.getElementById("numSub").disabled=false;
                       }
+                      
                   };
                   function sub(){
                       var num = document.getElementById("bookNum");
@@ -207,8 +213,14 @@
                   }
                   function inputChange(){
                       var num = document.getElementById("bookNum");
+                      <%--若输入的数是个负数--%>
                       if(num.value < 1)
                           sub();
+                      <%--若输入的数大于库存数--%>
+                      if(Number(num.value) > Number($(".stock").attr("stock"))){
+                    	  document.getElementById("bookNum").value = $(".stock").attr("stock");
+                    	  toastr["info"]("最多只有"+$(".stock").attr("stock")+"本书可购买哦~");
+                      }
                   }
           </script>
             <%--加载完页面之后--%>
@@ -261,6 +273,8 @@
 					$(".now_price").append((book.bPrice*book.bDiscount/10).toFixed(2)).append("<span class='bDiscount'>&nbsp;&nbsp;&nbsp;&nbsp;</span>");
 					$(".bDiscount").append(book.bDiscount==10 ? "" : ("&nbsp;("+book.bDiscount+"折)"));
 					$(".pre_price").append((book.bPrice).toFixed(2));
+					$(".stock").append(book.bStock);
+					$(".stock").attr("stock", book.bStock);
 				}
           		<%--加入购物车函数--%>
         		function addCart(bId,bNum) {

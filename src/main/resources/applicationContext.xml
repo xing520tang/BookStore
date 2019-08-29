@@ -15,6 +15,9 @@
     <context:component-scan base-package="com.tinyspot">
     	<!-- spring不扫描控制器 -->
     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    	
+    	<!-- 不扫描ControllerLog类，该类在SpringMvc中扫描，定义在springMvc的配置文件中 -->
+    	<!-- <context:exclude-filter type="assignable" expression="com.tinyspot.bs.log.ControllerLog"/> -->
     </context:component-scan>
     <context:property-placeholder location="classpath:dbconfig.properties"/>
     <bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -49,10 +52,13 @@
     	<property name="dataSource" ref="pooledDataSource"></property>
     </bean>
     
+    <!-- 设置aop自动代理 -->
+    <aop:aspectj-autoproxy/>
+    
     <!-- 开启基于注解的事务，使用xml配置的事务（主要用的都是配置式） -->
     <aop:config>
     	<!-- service后的两个点指的是即使service包下还有包也加入 -->
-    	<aop:pointcut expression="execution(* com.myssm.service..*(..))" id="txPoint"/>
+    	<aop:pointcut expression="execution(* com.tinyspot.bs.service..*(..))" id="txPoint"/>
     	<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
     </aop:config>
     

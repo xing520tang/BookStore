@@ -132,6 +132,12 @@ span.requiredAfter:after{
     font-weight: normal;
     font-family: arial,'Hiragino Sans GB',"Simsun";
 }
+.stock{
+	color: #969696;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: arial,'Hiragino Sans GB',"Simsun";
+}
 .bDiscount {
     color: #e52222;
     font-size: 12px;

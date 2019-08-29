@@ -124,7 +124,7 @@
                            <div class="input-group">
                                <span class="input-group-addon">昵&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 称</span>
                                <input type="text" class="form-control input-md" id="uNickname" name="uNickname"
-                               onchange="change()" placeholder="tinyspot">
+                               onkeyup="change()" placeholder="tinyspot">
                            </div>
                       </div>
                     </div>
@@ -193,7 +193,7 @@
                       </div>
                       <div class="col-md-2">
                             <input class="form-control" id="specificAdd" placeholder="输入详细地址" 
-                            name="uAddressDetail" onchange="change()" data-bv-field="storeAddrDetail"></input>
+                            name="uAddressDetail" onkeyup="change()" data-bv-field="storeAddrDetail"></input>
                       </div>
                     </div>
                   </div>
@@ -282,6 +282,7 @@
     					  "showMethod": "fadeIn",
     					  "hideMethod": "fadeOut"
     					}
+    			
         	});
         	function getProfileDate() {
 				$.ajax({
@@ -319,12 +320,16 @@
         			data:$("#profileForm").serialize(),
         			success:function(result){
         				console.log(result);
-        				$("#uNickName").empty();
-        				$("#uNickName").append($("#uNickname").val())//导航栏昵称要变
-        				$("#uuNickName").empty();
-        				$("#uuNickName").append($("#uNickname").val());
         				if(result.code == 100){
+        					$("#uNickName").empty();
+            				$("#uNickName").append($("#uNickname").val())<%--//导航栏昵称要变--%>
+            				$("#uuNickName").empty();
+            				$("#uuNickName").append($("#uNickname").val());<%--引语昵称要变--%>
+            				<%--信息保存成功后，保存按钮需要重新冻结--%>
+            				$("#loginn").attr("disabled","disabled");
         					toastr["success"](result.msg);
+        				}else{
+        					toastr["error"](result.msg);
         				}
         			},
         			error:function(){

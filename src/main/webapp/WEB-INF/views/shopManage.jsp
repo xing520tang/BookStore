@@ -37,6 +37,18 @@
     <link href="${SourcePath }/assets/css/backManage.css" rel="stylesheet">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  
+  <style>
+	span.requiredBefore:before,label.required:after{
+	    content: "*";
+	    color: red;
+	}
+	span.requiredAfter:after{
+	    content:"*";
+	    color: red;
+	    font-weight: bold;
+	}
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -168,12 +180,164 @@
 		<table id="table"></table>
 	</section>
 	
+	
 	<%--书本列表表格 --%>
 	<section class="content" id="bookTable" style="display: none;">
 		<table id="table1"></table>
 	</section>
 	
-    <!-- 主要内容 -->
+	<%-- 添加书本部分 --%>
+	<section class="content" id="addBookPart" style="display: none;">
+	
+	<div class="row">
+          <div class="col-sm-12">
+              <hr />
+              <p>
+                  <span class="requiredBefore">
+                      为必填
+                  </span>
+              </p>
+              <br>
+              <form action="/addBook" id="addBookForm" method="post">
+                  <!-- 书本名称 -->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">书本名称</span>
+                                 <input type="text" class="form-control input-md" id="" name="bName"
+                                 data-bv-field="bName">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 书本作者-->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">书本作者</span>
+                                 <input type="text" class="form-control input-md" id="" name="bAuthor"
+                                 data-bv-field="bAuthor">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 出版时间-->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">出版时间</span>
+                                 <input type="text" class="form-control input-md" id="" name="bPubDate"
+                                 data-bv-field="bPubDate">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 书本出版社-->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">出版社</span>
+                                 <input type="text" class="form-control input-md" id="" name="bPress"
+                                 data-bv-field="bPress">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 书本库存-->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">库存</span>
+                                 <input type="text" class="form-control input-md" id="" name="bStock"
+                                 data-bv-field="bStock">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 书本单价-->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">单价</span>
+                                 <input type="text" class="form-control input-md" id="" name="bPrice"
+                                 data-bv-field="bPrice">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 书本折扣-->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">折扣</span>
+                                 <input type="text" class="form-control input-md" id="" name="bDiscount"
+                                 data-bv-field="bDiscount">
+                             </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <!-- 书本主图 -->
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                             <div class="input-group">
+                                 <span class="input-group-addon requiredAfter">书本主图</span>
+                                 <%-- <div style="margin-left:27px;">
+                                   <label for="file"class=" btn btn-info">选择图片</label>
+                                   <input id="file" type="file" style="display:none"
+                                   name="bookImage" data-bv-field="bookImage">
+                                 </div>--%>
+                                 
+                                 <input id="lefile" type="file" style="display:none" name="bookImage" data-bv-field="bookImage"> 
+									<div class="input-append">
+									<input id="photoCover" class="input-md" type="text"> 
+									<a class="btn btn-info" onclick="$('input[id=lefile]').click();">选择图片</a> 
+									</div>
+                             </div>
+                             <small class="col-md-offset-8 col-md-5" style="color:#e74c3c; margin-top:5px;">图片不超过2M</small>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+
+                  <div class="form-horizontal">
+                      <div class="form-group">
+                        <!-- <label class="col-md-5 control-label"></label> -->
+                        <div class="col-md-2 col-md-offset-5">
+                          <input type="submit" id="registerr" class="form-control btn-success" name="Submit" value="提交审核" style="border-radius: 3px;">
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+              </form>
+          </div>
+      </div>
+	
+	</section>
+	
+    <!-- 主页内容 -->
     <section class="content" id="main-content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
@@ -694,13 +858,13 @@
 	    <%--初始化函数结束--%>
 	    <%--给待处理添加点击事件--%>
 		$("#toDo").click(function () {
-			alert("待处理被点击");
+			<%-- alert("待处理被点击"); --%>
 			<%--发送请求--%>
 			$.ajax({
 				url: "${APP_PATH}/getBOrderInfoToDo",
 				type: "GET",
 				success: function (data) {
-					alert("加载数据成功")
+					<%-- alert("加载数据成功") --%>
 					console.log(data);
 					reBuild("待处理")
 					$table.bootstrapTable('load', data);
@@ -714,13 +878,13 @@
 		
 		<%--给订单列表添加点击事件--%>
 		$("#orderList").click(function () {
-			alert("订单列表被点击");
+			<%--alert("订单列表被点击");--%>
 			<%--发送请求--%>
 			$.ajax({
 				url:"${APP_PATH}/getBOrderInfo",
 				type:"GET",
 				success: function (data) {
-					alert("加载数据成功")
+					<%-- alert("加载数据成功") --%>
 					console.log(data);
 					reBuild("订单列表")
 					$table.bootstrapTable('load', data);
@@ -730,24 +894,41 @@
 		
 		<%--给书本列表添加点击事件--%>
 		$("#bookList").click(function () {
-			alert("书本列表被点击");
+			<%--alert("书本列表被点击"); --%>
 			<%--发送请求--%>
 			$.ajax({
 				url:"${APP_PATH}/getBookInfo",
 				type:"GET",
 				success: function (data) {
-					alert("加载数据成功")
+					<%-- alert("加载数据成功") --%>
 					console.log(data);
 					buildBookList()
 					$table1.bootstrapTable('load', data);
 				}
 			});
 		});
+		
+		<%-- 点击添加书本，构建添加书本页面 --%>
+		$("#addBook").click(function(){
+			$("#main-content").hide();
+			$("#ttable").hide();
+			$("#bookTable").hide();
+			$("#addBookPart").show();
+			$("#headerTitle").empty();
+			$("#headerTitle").append("书本管理");
+			$("#headerTitle1").empty();
+			$("#headerTitle1").append("书本管理");
+			$("#headerTitle2").empty();
+			$("#headerTitle2").append("添加书本");
+		});
+		
+		
 		<%--构建书本列表--%>
 		function buildBookList() {
 			<%--//清空主内容--%>
-			$("#main-content").empty();
+			$("#main-content").hide();
 			$("#ttable").hide();
+			$("#addBookPart").hide();
 			$("#bookTable").show();
 			$("#headerTitle").empty();
 			$("#headerTitle").append("书本管理");
@@ -759,10 +940,11 @@
 		<%--重构页面--%>
 		function reBuild(headerTitle2) {
 			<%--//清空主内容--%>
-			$("#main-content").empty();
+			$("#main-content").hide();
 			$("#ttable").show();
 			$("#headerTitle").empty();
 			$("#bookTable").hide();
+			$("#addBookPart").hide();
 			$("#headerTitle").append("订单管理");
 			$("#headerTitle1").empty();
 			$("#headerTitle1").append("订单管理");
@@ -796,6 +978,12 @@
 	function downBtnClick(bId) {
 		alert("下架功能正在编辑中....."+bId);
 	}
+</script>
+
+<script type="text/javascript"> 
+	$('#lefile').change(function() { 
+		$('#photoCover').val($(this).val()); 
+	}); 
 </script>
 </body>
 </html>
