@@ -118,7 +118,10 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tinyspot.bs.bean.Book">
+  
+  <!-- 设置了useGeneratedKeys="true" keyProperty="bId"才能使用book.getuId()方法获取插入后的bId -->
+  <insert id="insert" parameterType="com.tinyspot.bs.bean.Book"
+  useGeneratedKeys="true" keyProperty="bId">
     insert into book (b_id, b_s_id, b_bc_id, 
       b_name, b_price, b_discount, 
       b_stock, b_author, b_press, 

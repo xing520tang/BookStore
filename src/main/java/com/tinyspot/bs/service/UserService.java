@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tinyspot.bs.bean.Md5;
 import com.tinyspot.bs.bean.Msg;
@@ -72,12 +73,19 @@ public class UserService {
 		return true;
 	}
 	
+	//这里返回的id并非真正的id，而是插入成功返回1，否则返回0。
+	//真正的uId应该使用user.getuId()获取，而且在userMapper.xml中的对应语句需要设置useGeneratedKeys="true" keyProperty="uId"
+	/**
+	 * 注意这个方法的返回值并非真正的uId，需要通过user.getuId才能获取
+	 * @param user
+	 * @return
+	 */
+	@Transactional
 	public int saveUserReturnUId(User user) {
 		int id = 0;
 		try {
 			id = userMapper.insert(user);
 		}catch (Exception e) {
-			// TODO: handle exception
 			id = 0;
 		}
 		return id;

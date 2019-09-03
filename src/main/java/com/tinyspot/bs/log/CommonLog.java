@@ -26,7 +26,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class CommonLog {
 	//AspectJ表达式,表示哪些方法需要增强（这些方法也叫连接点？）
-	@Pointcut(value = "execution(* com.tinyspot.bs.service.*.*(..)) || execution(* com.tinyspot.bs.dao.*.*(..))")
+	//@Pointcut(value = "execution(* com.tinyspot.bs.service.*.*(..)) || execution(* com.tinyspot.bs.dao.*.*(..))")
+	@Pointcut(value = "execution(* com.tinyspot.bs.service.*.*(..))")
 	public void pointCut() {
 		
 	}

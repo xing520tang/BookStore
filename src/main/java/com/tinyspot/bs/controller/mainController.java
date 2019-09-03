@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +37,7 @@ import com.tinyspot.bs.service.UserService;
  */
 @Controller
 public class mainController {
+	private static final Logger logger = LogManager.getLogger();
 	@Autowired
 	MainService mainService;
 	
@@ -46,7 +49,7 @@ public class mainController {
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainPage(HttpServletRequest request) {
-		System.out.println("main:GET******");
+		 logger.info("/main");
 		 Role role = mainService.getRole(request.getSession());
 		 request.setAttribute("role", role); //放回请求域，方便jsp页面使用
 		return "index";

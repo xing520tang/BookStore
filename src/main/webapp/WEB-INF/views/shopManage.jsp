@@ -11,6 +11,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="icon" href="${SourcePath }/imgs/favicon.ico">
+
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="${SourcePath }/bootstrap-3.3.7-dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -37,6 +38,8 @@
     <link href="${SourcePath }/assets/css/backManage.css" rel="stylesheet">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- bootstrapvalidator054 -->
+  <link rel="stylesheet" href="${SourcePath }/bootstrapvalidator054/dist/css/bootstrapValidator.min.css">
   
   <style>
 	span.requiredBefore:before,label.required:after{
@@ -156,7 +159,6 @@
             <li id="bookList"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> 书本列表</a></li>
           </ul>
         </li>
-        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -198,7 +200,7 @@
                   </span>
               </p>
               <br>
-              <form action="/addBook" id="addBookForm" method="post">
+              <form action="${APP_PATH }/addBook" id="addBookForm" method="post" enctype="multipart/form-data">
                   <!-- 书本名称 -->
                   <div class="form-horizontal">
                       <div class="form-group">
@@ -206,7 +208,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">书本名称</span>
-                                 <input type="text" class="form-control input-md" id="" name="bName"
+                                 <input type="text" class="form-control input-md" name="bName" placeholder="书本名称不超过25个字"
                                  data-bv-field="bName">
                              </div>
                         </div>
@@ -220,7 +222,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">书本作者</span>
-                                 <input type="text" class="form-control input-md" id="" name="bAuthor"
+                                 <input type="text" class="form-control input-md" name="bAuthor" placeholder="书本作者不超过10个字符"
                                  data-bv-field="bAuthor">
                              </div>
                         </div>
@@ -234,8 +236,8 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">出版时间</span>
-                                 <input type="text" class="form-control input-md" id="" name="bPubDate"
-                                 data-bv-field="bPubDate">
+                                 <input type="text" class="form-control input-md" name="pubDate" placeholder="出版时间请以yyyy-mm-dd的形式填写"
+                                 data-bv-field="pubDate">
                              </div>
                         </div>
                       </div>
@@ -248,7 +250,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">出版社</span>
-                                 <input type="text" class="form-control input-md" id="" name="bPress"
+                                 <input type="text" class="form-control input-md" name="bPress" placeholder="出版社字数不超过20"
                                  data-bv-field="bPress">
                              </div>
                         </div>
@@ -262,7 +264,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">库存</span>
-                                 <input type="text" class="form-control input-md" id="" name="bStock"
+                                 <input type="text" class="form-control input-md" name="bStock" placeholder="库存需要大于0"
                                  data-bv-field="bStock">
                              </div>
                         </div>
@@ -276,7 +278,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">单价</span>
-                                 <input type="text" class="form-control input-md" id="" name="bPrice"
+                                 <input type="text" class="form-control input-md" name="bPrice" placeholder="单价请保留两位小数，如99.99"
                                  data-bv-field="bPrice">
                              </div>
                         </div>
@@ -290,7 +292,7 @@
                         <div class="col-md-6">
                              <div class="input-group">
                                  <span class="input-group-addon requiredAfter">折扣</span>
-                                 <input type="text" class="form-control input-md" id="" name="bDiscount"
+                                 <input type="text" class="form-control input-md" name="bDiscount" placeholder="1~10以内的小数，保留一位小数，如7.9"
                                  data-bv-field="bDiscount">
                              </div>
                         </div>
@@ -310,28 +312,41 @@
                                    name="bookImage" data-bv-field="bookImage">
                                  </div>--%>
                                  
-                                 <input id="lefile" type="file" style="display:none" name="bookImage" data-bv-field="bookImage"> 
+                                 <input id="lefile"  type="file" class="form-control" style="display:none" name="bookImage"> 
 									<div class="input-append">
-									<input id="photoCover" class="input-md" type="text"> 
-									<a class="btn btn-info" onclick="$('input[id=lefile]').click();">选择图片</a> 
+									<input id="photoCover" class="form-control input-md" type="text" name="fileName" readonly="readonly" > 
+									<a id="selectBtn" class="form-control btn btn-info" onclick="$('input[id=lefile]').click();">选择图片</a> 
 									</div>
                              </div>
-                             <small class="col-md-offset-8 col-md-5" style="color:#e74c3c; margin-top:5px;">图片不超过2M</small>
+                             <small class="col-md-offset-8 col-md-5" style="color:#e74c3c; margin-top:5px;">图片不超过2M,jpg/png</small>
                         </div>
                       </div>
                   </div>
                   <br>
 
+                 <%--  <div class="form-horizontal">
+                      <div class="form-group">
+                        <!-- <label class="col-md-5 control-label"></label> -->
+                        <div class="col-md-2 col-md-offset-5">
+                          <input type="submit" id="submitAndVerify" class="form-control btn-success" 
+                          name="Submit" value="提交审核" style="border-radius: 6px;">
+                        </div>
+                      </div>
+                  </div> 
+                  --%>
+                  
                   <div class="form-horizontal">
                       <div class="form-group">
                         <!-- <label class="col-md-5 control-label"></label> -->
                         <div class="col-md-2 col-md-offset-5">
-                          <input type="submit" id="registerr" class="form-control btn-success" name="Submit" value="提交审核" style="border-radius: 3px;">
+                        <button id="testbtn" class="form-control btn-success" style="border-radius: 6px;">
+                        	提交审核</button>
                         </div>
                       </div>
                   </div>
                   <br>
               </form>
+              
           </div>
       </div>
 	
@@ -492,6 +507,35 @@
 </div>
 <!-- ./wrapper -->
 
+<%--添加书本相关模态框 --%>
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalTitle">请稍等</h4>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- 进度条 -->
+        <div class="progress" id="modalProgress">
+		  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+		    <span class="sr-only">50% Complete</span>
+		  </div>
+		</div>
+		<!-- 具体内容 -->
+		<div id="modalContent">
+			
+		</div>
+      </div>
+      <div class="modal-footer" id="modalFooter" style="display: none;">
+        <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<%--添加书本相关模态框结束 --%>
+
 <!-- jQuery 3 -->
 <script src="${SourcePath }/js/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -500,6 +544,8 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
+
+
 <!-- Bootstrap 3.3.7 -->
 <script src="${SourcePath }/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
@@ -530,11 +576,228 @@
 <!-- AdminLTE for demo purposes -->
 <script src="${SourcePath }/bower_components/demo.js"></script>
 <%--引入bootstrap-table的js文件 --%>
-        <script src="${SourcePath }/bootstrap-table/bootstrap-table.min.js"></script>
-        <script src="${SourcePath }/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+<script src="${SourcePath }/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="${SourcePath }/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+<!-- bootstrapvalidator054 -->
+<script src="${SourcePath }/bootstrapvalidator054/dist/js/bootstrapValidator.min.js"></script>
+
 <%--初始化 --%>
 <script type="text/javascript">
 	$(function() {
+		
+		<%-- bootstrapValidator初始化 --%>
+		$(addBookForm).bootstrapValidator({
+			message: 'This value is not valid!',
+	        feedbackIcons:{
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields:{
+	        	bName:{
+	        		validators:{
+	        			notEmpty:{
+	                        message: '书本名不能为空'
+	                    },
+	        			stringLength:{
+	        				min:1,
+	            			max:25,
+	            			message:'书本不超过25个字'
+	        			}
+	        			/* regexp:{
+	        				regexp: /^[A-Za-z\u4e00-\u9fa5]+$/,
+	        				message: '店名只能是汉字或英文字母'
+	        			} */
+	        		}
+	        	},
+	        	bAuthor:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'作者不能为空'
+	        			},
+	        			stringLength:{
+	        				min:1,
+	            			max:10,
+	            			message:'作者不超过10个字'
+	        			}
+	        		}
+	        	},
+	        	pubDate:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'出版时间不能为空'
+	        			},
+	        			date:{
+	        				 format: 'YYYY-MM-DD',
+	        				 message: '日期格式不正确(yyyy-mm-dd)'
+	        			},
+	        			callback:{
+       					 message:'请输入正确的日期',
+       					 callback:function(value, validator){
+	        					 var now = new Date();
+	        					 var g = new Date(value);
+	        					 if(now >= g)
+	        						 return true;
+	        					 else return false;
+	        				 }
+       				 	}
+	        		}
+	        	},
+	        	bPress:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'出版社不能为空'
+	        			},
+	        			stringLength:{
+	        				min:1,
+	            			max:10,
+	            			message:'出版社不超过20个字'
+	        			}
+	        		}
+	        	},
+	        	bStock:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'库存不能为空'
+	        			},
+	        			callback: {
+	        				message: '请输入大于0的整数',
+	        				callback:function(value, validator){
+	        					var stock = Number(value);
+	        					if(isNaN(stock)){
+	        						return false;
+	        					}else{
+	        						if(stock <= 0)
+	        							return false
+	        						if(Math.floor(stock) == stock){
+										if(value.indexOf(".") == -1)	<%--没有小数点--%>        							
+	        								return true;
+										return false;
+	        						}
+	        						return false;
+	        					}
+	        				}
+	        			}
+	        		}
+	        	},
+	        	bPrice:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'单价不能为空'
+	        			},
+	        			callback: {
+	        				message: '单价需保留两位小数(99.99)',
+	        				callback: function(value, validator){
+	        					var price = Number(value);
+	        					if(isNaN(price)){
+	        						return false;
+	        					}else {
+	        						if(price <= 0)
+	        							return false;
+	        						var s = value.split(".");
+	        						var len = s.length;
+	        						if(len==1 || len==2){
+	        							if(len == 1)
+	        								return true;
+	        							if(s[1].length != 2)  <%--如果输入了小数点，就看是不是保留了两位小数--%>
+	        								return false;
+	        							return true;
+	        						}else return false;
+	        					}
+	        				}
+	        			}
+	        		}
+	        	},
+	        	bDiscount:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'请填写一个折扣[1~10]之间，一位小数'
+	        			},
+	        			callback :{
+	        				message: '[1~10]之间，保留一位小数',
+	        				callback: function(value, validate){
+	        					var discount = Number(value);
+	        					if(isNaN(discount)){
+	        						return false;
+	        					}else{
+	        						if(discount<=0 || discount>10)
+	        							return false;
+	        						var s = value.split(".");
+	        						var len = s.length;
+	        						if(len==1 || len==2){
+	        							if(len == 1)
+	        								return true;
+	        							if(s[1].length != 1)  <%--如果输入了小数点，就看是不是保留了两位小数--%>
+	        								return false;
+	        							return true;
+	        						}else return false;
+	        					}
+	        				}
+	        			}
+	        		}
+	        	},
+	        	fileName:{
+	        		validators:{
+	        			notEmpty:{
+	        				message:'选择一张书本主图'
+	        			},
+	        			callback: {
+	        				message: '要求不超过2M的jpg或png',
+	        				callback :function(value, validator){
+	        					var fileName = $('#lefile').val().split('\\'); <%--得到文件名数组 --%>
+	        					//console.log($('#lefile').val);
+	        					//console.log(fileName);
+	        				    var fileSize =  document.getElementById('lefile').files[0]; <%--获得文件大小；--%>
+	        				    //console.log(fileSize);
+	        				    //fileName2 = fileName[fileName.length-1]; <%--获得文件名 --%>
+	        				   // console.log(fileName2);
+	        				    filePath = $('#lefile').val().toLowerCase().split(".");
+	        				    fileType =  filePath[filePath.length - 1]; <%--获得文件结尾的类型如 zip rar 这种写法确保是最后的 --%>
+	        				   // $('.errHint').show().text(fileName[2]);
+	        				    //console.log(filePath);
+	        				    if(fileType=="")
+	        				    	return false;
+	        				    <%--if(!(fileType == "png" || fileType == "jpg" || fileType == "xlsx"|| fileType == "docx"|| fileType == "rar" || fileType == "zip" ))--%>
+	        				    if(!(fileType == "png" || fileType == "jpg")){
+	        				        alert("文件格式不符合要求！");
+	        				        return false;
+	        				    }
+	        				    if(fileSize.size>2097152){
+	        				    	alert("请上传不超过2M的文件");
+	        				        return false;
+	        				    }
+	        				    return true;
+	        				}
+	        			}
+	        		}
+	        	},
+	        	 /* bookImage:{
+	        		validators:{
+	        			notEmpty: {
+	                        message: '上传图片不能为空'
+	                    },
+	                    file: {
+	                        extension: 'png,jpg,jpeg',
+	                        type: 'image/png,image/jpg,image/jpeg',
+	                        message: '请重新选择图片'
+	                    },
+	        			 callback: {
+	        				callback: function(value, validator){
+	        					console.log("bookImage");
+	        					$('#addBookForm').bootstrapValidator('revalidateField', 'fileName');
+	        				}
+	        			} 
+	        		}
+	        	}  */
+	        }
+		}).on('error.form.bv', function(e){
+	        alert("daole")
+	    })<%--表单验证成功后--%>
+	    .on('success.form.bv', function(e) {
+	   		$("#addBookForm").serialize()<%--序列化表单数据--%>
+	    })
+	<%-- bootstrapValidator初始化结束 --%>
+		
 		<%--表格初始化--%>
 		InitMainTable();
 	    <%--//初始化bootstrap-table的内容--%>
@@ -856,6 +1119,8 @@
 	    };
 	    
 	    <%--初始化函数结束--%>
+	    
+	    
 	    <%--给待处理添加点击事件--%>
 		$("#toDo").click(function () {
 			<%-- alert("待处理被点击"); --%>
@@ -978,12 +1243,76 @@
 	function downBtnClick(bId) {
 		alert("下架功能正在编辑中....."+bId);
 	}
+	
+	
 </script>
 
+
+
+
+<%--添加书本表单的需要 --%>
 <script type="text/javascript"> 
 	$('#lefile').change(function() { 
 		$('#photoCover').val($(this).val()); 
+
+		$('#addBookForm').bootstrapValidator('revalidateField', 'fileName'); <%--重新验证fileName字段--%>
 	}); 
+
+	<%-- 提交按钮 --%>
+	$('#testbtn').click(function(){
+		var bv = $('#addBookForm').data('bootstrapValidator'); <%--得到表单对象--%>
+		
+		bv.validate(); <%--验证表单的全部字段--%>
+		if(bv.isValid()){  <%--如果全部验证成功--%>
+			$("#modalTitle").empty().append("请稍后");
+			$("#modalProgress").show();
+			$("#modalContent").hide();
+			$("#modalFooter").hide();
+			$('#addBookModal').modal({ 
+				backdrop: false
+			}); <%--放进度条--%>
+			
+			$.ajax({
+				url:"${APP_PATH}/addBook",
+				type: "POST",
+				data: new FormData($("#addBookForm")[0]), 
+				processData: false,
+			    contentType: false,
+				success:function(data){
+					<%--重置表单--%>
+					$('#addBookForm')[0].reset(); <%--清空表单内的值--%>
+					bv.resetForm();<%--重置验证情况，全部变为未验证--%>
+					$('#addBookForm').modal("hide");
+					
+					<%--修改模态框--%>
+					$("#modalTitle").empty().append("提示");
+					$("#modalProgress").hide();
+					$("#modalContent").empty();
+					if(data.code == 100)
+						$("#modalContent").append("提交成功，等待审核通过商品就上架啦~");
+					else $("#modalContent").append(data.msg);
+					$("#modalContent").show();
+					$("#modalFooter").show();
+					<%--打开模态框--%>
+					$('#addBookModal').modal({ 
+						backdrop: false
+						});
+				},
+				error: function(data){
+					$("#modalTitle").empty().append("错误");
+					$("#modalProgress").hide();
+					$("#modalContent").empty();
+					$("#modalContent").append("系统错误，请联系管理员！");
+					$("#modalContent").show();
+					$("#modalFooter").show();
+					<%--打开模态框--%>
+					$('#addBookModal').modal({ 
+						backdrop: false
+						});
+				}
+			})
+		}
+	})
 </script>
 </body>
 </html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configration SYSTEM "log4j.dtd">
+<!-- 
+	这是对于log4j1使用的xml
+	日志级别 debug>info>warn>error
+	1.级别找精确，输出为各自（对于logger来说）
+ -->
+<log4j:configration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- 日志目的地（追加到哪儿）（可以是控制台也可以是文件等地方） -->
+	<appender name="log.console" class="org.apache.log4j.ConsoleAppender">
+		<!-- 设置日志样式（布局） -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m MDC%X%n"/>
+			<!-- 生产上用下面这个 -->
+			<!-- <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %5p (%c{1}:%M) - %m%n"/> -->
+		</layout>
+		
+		<!-- 过滤器，设置最后日志输出的级别 -->
+		<!-- 
+			<filter class="org.apache.log4j.varia.LevelRangeFilter">
+				<param name="LevelMin" value="INFO"/>
+				<param name="LevelMax" value="INFO"/>
+				<param name"AcceptOnMatch" value="true"/>
+			</filter>
+		 -->
+	</appender>
+	
+	<!-- DailyRollingFileAppender表示每天的日志存储在一个单独文件 -->
+	<appender name="log.file" class="org.apache.log4j.DailyRollingFileAppender">
+	
+		<param name="File"   value="d:\\bookstore.log"/><!-- 想要将日志文件存在哪个地址 -->
+		<param name="Append" value="true"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m MDC%X%n"/>
+			<!-- 生产上用下面这个 -->
+			<!-- <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %5p (%c{1}:%M) - %m%n"/> -->
+		</layout>
+		
+		<!-- 
+			<filter class="org.apache.log4j.varia.LevelRangeFilter">
+				<param name="LevelMin" value="INFO"/>
+				<param name="LevelMax" value="INFO"/>
+				<param name"AcceptOnMatch" value="true"/>
+			</filter>
+		 -->
+	</appender>
+
+	<logger name="com.tinyspot" additivity="false">
+	
+	</logger>
+	
+	<!-- 记录器（控制器，可以多个）对于com.tinyspot包下的所有类进行日志记录 -->
+	<!-- 
+	<logger name="com.tinyspot" additivity="false"> //additivity="false"停止传播机制
+		<level value="info"/>
+		<appender-ref ref="log.console"/>  引用上面的appender
+		<appender-ref ref="log.file"/>
+	</logger>
+	
+	<logger name="com.tinyspot.controller" additivity="false">
+		<level value="debug"/>
+		<appender-ref ref="log.console"/>  引用上面的appender
+		<appender-ref ref="log.file"/>
+	</logger> 
+	-->
+	
+	<!-- 根记录器（控制器）  -->
+	<root>
+		<level value="debug"/>  <!-- 日志级别 -->
+		<appender-ref ref="log.console"/>  <!-- 引用上面的appender -->
+		<appender-ref ref="log.file"/>
+	</root>
+	
+</log4j:configration>

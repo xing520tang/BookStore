@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -244,5 +245,12 @@ public class MapperTest {
 				}
 			}
 			return bOrderInfos;
+		}
+		
+		@Test
+		public void testTransaction() {
+			User user = new User(null, "test01", "12345678901", "123456", "hehe", (byte)1, (byte)0, new Date());
+			int uId = userService.saveUserReturnUId(user);
+			System.out.println("uId: " + user.getuId() + "\n返回值：" + uId);
 		}
 }

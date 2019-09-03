@@ -46,6 +46,10 @@
     	<constructor-arg name="executorType" value="BATCH"></constructor-arg>
     </bean>
     <!-- ===========================事务控制的配置============================================= -->
+    
+    <!-- 开启基于注解的事务管理功能 -->
+    <tx:annotation-driven/>
+    
     <!-- 事务控制的配置 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<!-- 控制数据源 -->
@@ -54,6 +58,7 @@
     
     <!-- 设置aop自动代理 -->
     <aop:aspectj-autoproxy/>
+    
     
     <!-- 开启基于注解的事务，使用xml配置的事务（主要用的都是配置式） -->
     <aop:config>

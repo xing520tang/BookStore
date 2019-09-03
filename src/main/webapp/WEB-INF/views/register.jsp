@@ -307,6 +307,9 @@
                     fields:{
                     	uNickname:{
                         	validators:{
+                        		notEmpty:{
+                                    message:'昵称不能为空'
+                                },
                                 stringLength:{
                                     min: 1,
                                     max: 20,

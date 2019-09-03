@@ -278,6 +278,7 @@
             function randomNumber(min, max){
                 return Math.floor(Math.random()*(max-min+1) + min);
             };
+            
             function randomOpt(){
                 var n = randomNumber(1,4);
                 switch (n) {
@@ -285,12 +286,15 @@
                     case 2: return '-';
                     default: return '*';
                 }
-            }
+            };
+            
             function generateCaptcha(){
                 $('#captchaOpt').html([randomNumber(1,100), randomOpt(),
                 randomNumber(1,100), '='].join(' '));
             };
+            
             generateCaptcha();
+            
             $(bRegisterForm).bootstrapValidator({
                 message: 'This value is not valid!',
                 feedbackIcons:{

@@ -1,5 +1,7 @@
 package com.tinyspot.bs.controlleradvice;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice  //包名由来
 //类名意思：处理Controller中类方法产生的异常
 public class HandlerControllersException {
+	
+	private static final Logger logger = LogManager.getLogger();
 
 	/*
 	 * @ExceptionHandler注解注意事项
@@ -22,9 +26,10 @@ public class HandlerControllersException {
 	 *     则会去@ControllerAdvice标注的类中寻找@ExceptionHandler标注的方法处理异常
 	 */
 
-	//处理数学异常，返回异常页面
+	//处理数学异常，返回异常页面(如果调用目标方法的是ajax请求，那么就不会显示页面，因为ajax异步请求不会刷新页面）
 	@ExceptionHandler({ArithmeticException.class})  //数学异常走这个方法
 	public String handlerArithmeticException(Exception exp) {
+		logger.error("算数异常：", exp);
 		return "exception";
 	}
 	
@@ -43,6 +48,7 @@ public class HandlerControllersException {
 	 */
 	@ExceptionHandler({RuntimeException.class})
 	public String handlerAnotherExceptions(Exception exp) {
+		logger.error("异常：", exp);
 		return "exception";
 	}
 	
